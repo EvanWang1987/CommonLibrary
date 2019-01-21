@@ -16,7 +16,16 @@ import android.widget.EditText;
  */
 public class SimpleDialogFactory {
 
-    /** 生成进度对话框 */
+    /**
+     * 生成进度对话框
+     * @param context
+     * @param title
+     * @param message
+     * @param progressStyle {@Link ProgressDialog#STYLE_HORIZONTAL} {@Link ProgressDialog#STYLE_SPINNER}
+     * @param max
+     * @param progress
+     * @return
+     */
     public static ProgressDialog createProgressDialog(Context context, CharSequence title, CharSequence message, int progressStyle, int max, int progress) {
         ProgressDialog dialog = new ProgressDialog(context);
         dialog.setTitle(title);
