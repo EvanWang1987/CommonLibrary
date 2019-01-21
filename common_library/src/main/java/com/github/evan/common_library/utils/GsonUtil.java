@@ -1,9 +1,11 @@
 package com.github.evan.common_library.utils;
 
+import com.github.evan.common_library.genericity.ParameterizedTypeImpl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -35,27 +37,26 @@ public class GsonUtil {
         mGson = builder.create();
     }
 
-    public <DST> DST fromJson(String jsonString, Class<DST> clazz) {
-        return mGson.fromJson(jsonString, clazz);
+    /** Json反序列化为对象 */
+    public <Model> Model json2Model(String json, Class<Model> modelClass){
+        return mGson.fromJson(json, modelClass);
     }
 
-    public <DST> List<DST> fromJson(String jsonString) {
-        Type type = new TypeToken<List<DST>>() {
-        }.getType();
-        return mGson.fromJson(jsonString, type);
+    /** 对象序列化为Json */
+    public <Model> String model2Json(Model model){
+        return mGson.toJson(model);
     }
 
-    public <DST> String toJson(DST dst) {
-        return mGson.toJson(dst);
+    /** Json反序列化为List<对象> */
+    public <Model> List<Model> json2ListModel(String json, Class<Model> modelClass){
+        ParameterizedType listType = new ParameterizedTypeImpl(List.class, new Class[]{modelClass});
+        return mGson.fromJson(json, listType);
     }
 
-    public String toJsonWithObject(Object object) {
-        return mGson.toJson(object);
+    /** List<对象>序列化为Json */
+    public <Model> String ListModel2Json(List<Model> models, Class<Model> modelClass){
+        ParameterizedType listType = new ParameterizedTypeImpl(List.class, new Class[]{modelClass});
+        return mGson.toJson(models, listType);
     }
 
-    public <DST> String toJson(List<DST> list) {
-        Type type = new TypeToken<List<DST>>() {
-        }.getType();
-        return mGson.toJson(list, type);
-    }
 }

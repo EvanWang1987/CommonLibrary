@@ -9,7 +9,7 @@ import com.github.evan.common_library.utils.PackageUtil;
 /**
  * Created by Evan on 2019/1/12 0012.
  */
-public class BLoggerActivity extends AStackActivity {
+public abstract class BLoggerActivity extends AStackActivity {
     public String DEFAULT_TAG = PackageUtil.getPackageName();
 
     @Override

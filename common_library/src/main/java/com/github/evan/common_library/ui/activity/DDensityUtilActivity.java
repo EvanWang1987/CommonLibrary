@@ -5,7 +5,7 @@ import com.github.evan.common_library.utils.DensityUtil;
 /**
  * Created by Evan on 2019/1/12 0012.
  */
-public class DDensityUtilActivity extends CIntentUtilActivity {
+public abstract class DDensityUtilActivity extends CIntentUtilActivity {
 
 
     public int getRealScreenWidthOfPx(){

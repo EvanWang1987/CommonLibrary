@@ -3,6 +3,7 @@ package com.github.evan.common_library.utils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import com.github.evan.common_library.BaseApplication;
@@ -21,15 +22,19 @@ public class PackageUtil {
      * @return  没有的权限,返回List不为null
      */
     public static @NonNull List<String> checkPermission(String... permissions) {
-        List<String> returnValue = new ArrayList<>();
-        for (int i = 0; i < permissions.length; i++) {
-            String permission = permissions[i];
-            boolean isExistsPermission = ContextCompat.checkSelfPermission(BaseApplication.getApplication(), permission) == PackageManager.PERMISSION_GRANTED;
-            if(!isExistsPermission){
-                returnValue.add(permission);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            List<String> returnValue = new ArrayList<>();
+            for (int i = 0; i < permissions.length; i++) {
+                String permission = permissions[i];
+                boolean isExistsPermission = ContextCompat.checkSelfPermission(BaseApplication.getApplication(), permission) == PackageManager.PERMISSION_GRANTED;
+                if(!isExistsPermission){
+                    returnValue.add(permission);
+                }
             }
+            return returnValue;
         }
-        return returnValue;
+
+        return null;
     }
 
     /**

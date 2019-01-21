@@ -9,7 +9,7 @@ import com.github.evan.common_library.utils.IntentUtil;
 /**
  * Created by Evan on 2019/1/11 0011.
  */
-public class CIntentUtilActivity extends BLoggerActivity {
+public abstract class CIntentUtilActivity extends BLoggerActivity {
 
     public void jumpActivity(Class<? extends Activity> clazz, Bundle bundle) {
         IntentUtil.jumpActivity(this, clazz, bundle);

@@ -3,8 +3,8 @@ package com.github.evan.common_library.utils;
 import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.Toast;
+import com.github.evan.common_library.BaseApplication;
 
-import com.github.common_library.BaseApplication;
 
 /**
  * Created by Evan on 2017/11/19.
