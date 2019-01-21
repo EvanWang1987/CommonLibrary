@@ -48,8 +48,9 @@ public class BatteryUtil {
                     }
                 }
             }
-            String jsonString = GsonUtil.getInstance().toJsonWithObject(map);
-            BatteryInfo batteryInfo = GsonUtil.getInstance().fromJson(jsonString, BatteryInfo.class);
+//            String jsonString = GsonUtil.getInstance().toJsonWithObject(map);
+            String jsonString = GsonUtil.getInstance().mapModel2Json(map, String.class, Object.class);
+            BatteryInfo batteryInfo = GsonUtil.getInstance().json2Model(jsonString, BatteryInfo.class);
             return batteryInfo;
         } catch (IOException e) {
             e.printStackTrace();

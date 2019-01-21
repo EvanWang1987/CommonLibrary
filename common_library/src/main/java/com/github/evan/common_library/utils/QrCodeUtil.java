@@ -3,6 +3,7 @@ package com.github.evan.common_library.utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.support.annotation.ColorInt;
 import android.text.TextUtils;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
@@ -29,7 +30,7 @@ import java.util.Map;
 public class QrCodeUtil {
 
 
-    public static Bitmap createQRImage(String qrCode, int widthPix, int heightPix) {
+    public static Bitmap createQRImage(String qrCode, int widthPix, int heightPix, @ColorInt int backgroundColor, @ColorInt int qrColor, ErrorCorrectionLevel level) {
         try {
             if (TextUtils.isEmpty(qrCode)) {
                 return null;
@@ -37,20 +38,20 @@ public class QrCodeUtil {
 
             Map<EncodeHintType, Object> hints = new HashMap<>();
             hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
-            hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+            hints.put(EncodeHintType.ERROR_CORRECTION, level);
             BitMatrix bitMatrix = new QRCodeWriter().encode(qrCode, BarcodeFormat.QR_CODE, widthPix, heightPix, hints);
             int[] pixels = new int[widthPix * heightPix];
             for (int y = 0; y < heightPix; y++) {
                 for (int x = 0; x < widthPix; x++) {
                     if (bitMatrix.get(x, y)) {
-                        pixels[y * widthPix + x] = 0xff000000;
+                        pixels[y * widthPix + x] = qrColor;
                     } else {
-                        pixels[y * widthPix + x] = 0xffffffff;
+                        pixels[y * widthPix + x] = backgroundColor;
                     }
                 }
             }
 
-            Bitmap bitmap = Bitmap.createBitmap(widthPix, heightPix, Bitmap.Config.ARGB_8888);
+            Bitmap bitmap = Bitmap.createBitmap(widthPix, heightPix, Bitmap.Config.RGB_565);
             bitmap.setPixels(pixels, 0, widthPix, 0, 0, widthPix, heightPix);
             return bitmap;
         } catch (WriterException e) {

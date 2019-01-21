@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Evan on 2017/12/10.
@@ -57,6 +58,18 @@ public class GsonUtil {
     public <Model> String ListModel2Json(List<Model> models, Class<Model> modelClass){
         ParameterizedType listType = new ParameterizedTypeImpl(List.class, new Class[]{modelClass});
         return mGson.toJson(models, listType);
+    }
+
+    /** Map<Key, Value>序列化为json */
+    public <Key, Value> String mapModel2Json(Map<Key, Value> models, Class<Key> keyClass, Class<Value> valueClass){
+        ParameterizedType mapType = new ParameterizedTypeImpl(Map.class, new Class[]{keyClass, valueClass});
+        return mGson.toJson(models, mapType);
+    }
+
+    /** Json反序列化为Map */
+    public <Key, Value> Map<Key, Value> json2MapModel(String json, Class<Key> keyClass, Class<Value> valueClass){
+        ParameterizedType type = new ParameterizedTypeImpl(Map.class, new Class[]{keyClass, valueClass});
+        return mGson.fromJson(json, type);
     }
 
 }
