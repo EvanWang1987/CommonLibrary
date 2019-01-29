@@ -1,6 +1,8 @@
 package com.github.evan.common_library.manager.audio;
 
 import android.content.Context;
+import android.media.AudioRecord;
+import android.media.MediaRecorder;
 import android.media.SoundPool;
 import android.support.annotation.RawRes;
 import java.util.concurrent.ConcurrentHashMap;

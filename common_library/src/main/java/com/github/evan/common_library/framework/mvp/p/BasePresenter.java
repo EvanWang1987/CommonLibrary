@@ -4,7 +4,7 @@ import com.github.evan.common_library.framework.mvp.v.IMvpView;
 
 import java.lang.ref.SoftReference;
 
-public class BasePresenter<V extends IMvpView> implements IMvpPresenter {
+public abstract class BasePresenter<V extends IMvpView> implements IMvpPresenter {
     private SoftReference<V> mView;
 
     public BasePresenter(V view) {

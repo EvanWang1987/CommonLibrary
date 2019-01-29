@@ -93,6 +93,14 @@ public class FileUtil {
         return returnValue;
     }
 
+    public static String getFilesDir(){
+        String value = BaseApplication.getApplication().getFilesDir().getAbsolutePath();
+        if(isSdcardMounted()){
+            value = BaseApplication.getApplication().getExternalFilesDir("").getAbsolutePath();
+        }
+        return value;
+    }
+
     /**
      * 获取SharedPreference目录
      *
