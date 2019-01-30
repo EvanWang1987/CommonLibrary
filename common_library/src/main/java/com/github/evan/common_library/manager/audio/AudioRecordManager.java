@@ -142,6 +142,16 @@ public class AudioRecordManager {
         return true;
     }
 
+    /**
+     * 停止录音
+     * @param quality
+     */
+    public void stopRecord(AudioQuality quality){
+        AudioRecord audioRecord = mAudioRecords.get(quality);
+        if(null != audioRecord && audioRecord.getState() == AudioRecord.RECORDSTATE_RECORDING){
+            audioRecord.stop();
+        }
+    }
 
     /**
      * pcm文件转wav文件
@@ -295,17 +305,6 @@ public class AudioRecordManager {
         header[43] = (byte) ((totalAudioLen >> 24) & 0xff);
         out.write(header, 0, 44);
     }
-
-
-
-
-
-
-
-
-
-
-
 
     private void init(){
         AudioQuality[] values = AudioQuality.values();
