@@ -1,5 +1,6 @@
 package com.github.evan.common_library.framework.mvp.p;
 
+
 public interface IMvpPresenter {
 
     void onCreate();

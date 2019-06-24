@@ -21,8 +21,11 @@ public abstract class AStackActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        mActivityStack.remove(this);
-        mActivityStack.addFirst(this);
+        Activity first = mActivityStack.getFirst();
+        if(first != this){
+            mActivityStack.remove(this);
+            mActivityStack.addFirst(this);
+        }
         super.onRestart();
     }
 

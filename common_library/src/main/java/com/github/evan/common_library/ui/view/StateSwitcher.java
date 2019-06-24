@@ -13,10 +13,12 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.evan.common_library.R;
@@ -34,6 +36,7 @@ public class StateSwitcher extends ConstraintLayout {
     public static final int NO_SEARCH_CONTENT = 3;
     public static final int NETWORK_TIME_OUT = 4;
     public static final int UNKNOWN = 5;
+    public static final int LOADING_WITH_PROGRESS = 6;
 
     private Drawable mLoadingDrawable, mUnknownDrawable, mLoadEmptyDrawable, mNetUnAvailableDrawable, mNetTimeoutDrawable, mNoSearchContentDrawable;
     private CharSequence mLoadingText, mUnknownText, mLoadEmptyText, mNetUnAvailableText, mNetTimeoutText, mNoSearchContentText;
@@ -44,6 +47,7 @@ public class StateSwitcher extends ConstraintLayout {
     private @Dimension int mStatusTextSize;
     private ImageView mImgStateDrawable;
     private TextView mTxtState;
+    private ProgressBar mProgressBar;
     private ObjectAnimator mRotateAnim;
 
     public StateSwitcher(Context context) {
@@ -61,6 +65,18 @@ public class StateSwitcher extends ConstraintLayout {
         setup(context, attrs, defStyleAttr);
     }
 
+    public void setMaxProgress(int progress){
+        if(progress <= 0){
+            progress = 100;
+        }
+
+        mProgressBar.setMax(progress);
+    }
+
+    public void updateProgress(int progress){
+        mProgressBar.setProgress(progress);
+    }
+
     public void setState(int loadingStatus) {
         mState = loadingStatus;
         switch (mState){
@@ -73,6 +89,13 @@ public class StateSwitcher extends ConstraintLayout {
             case LOADING:
                 mImgStateDrawable.setImageDrawable(mLoadingDrawable);
                 mTxtState.setText(mLoadingText);
+                startRotateAnim();
+                break;
+
+            case LOADING_WITH_PROGRESS:
+                mTxtState.setVisibility(View.INVISIBLE);
+                mImgStateDrawable.setVisibility(View.INVISIBLE);
+                mProgressBar.setVisibility(View.VISIBLE);
                 startRotateAnim();
                 break;
 
@@ -216,6 +239,7 @@ public class StateSwitcher extends ConstraintLayout {
         LayoutInflater.from(getContext()).inflate(R.layout.view_state_switcher, this, true);
         mTxtState = findViewById(R.id.txt_state_switcher);
         mImgStateDrawable = findViewById(R.id.img_state_switcher);
+        mProgressBar = findViewById(R.id.state_switcher_progressBar);
 
         mRotateAnim = ObjectAnimator.ofFloat(mImgStateDrawable, "rotation", 0f, 360f);
         mRotateAnim.setDuration(750);
